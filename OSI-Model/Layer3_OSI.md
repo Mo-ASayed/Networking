@@ -46,4 +46,4 @@ Source IP: Bigger, larger addresses (space taken in a packet to store ipv6 sourc
 Destination IP: Bigger, larger addresses 
 Data: From Layer 4 as well
 
-![alt text](./OSI_Images/Layer4_OSI.png)
+![alt text](./OSI_Images/Layer3_OSI.png)

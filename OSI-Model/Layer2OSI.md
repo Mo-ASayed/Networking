@@ -1,5 +1,3 @@
-#  My Notes on the OSI Model #
-
 # Layer 2 DataLink Layer
 
 1 - Everything above the data link layer, this is all device-device <br>
@@ -12,7 +10,7 @@
 8 - PAYLOAD: Contains the data the frame is sending, provided by the layer 3 Layer which is provided to the ET. Ranges from 46 - 1500 Bytes <br>
 9 - Frame Check Sequence (FCS), used to identify any errors in the frame and is a simple CRC check. <br>
 
-![alt text](Layer2OSI.png)
+![alt text](./OSI_Images/Layer2OSI.png)
 
 # Issues solved by Layer 2
 
@@ -22,7 +20,7 @@ Layer 1 is purely a physical connection between network interfaces - this means 
 
 Data is `encapsulated` between different layers. For example a Game between 2 physical devices on Layer 2, the `game data` is encapsulated in a `frame` which contains the state of this game at a particular second which is then sent down to layer 1 and transferred to the second device on the network.
 
-![alt text](Game-GameOSI.png)
+![alt text](./OSI_Images/Game-GameOSI.png)
 
 # Key points to remember!
 
