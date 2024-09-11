@@ -153,3 +153,60 @@ The ARP Sends a L2 Broadcast to all Frames asking who has the specific IP Addres
 The Other device also has the ARP which responds to the broadcast stating that it is the owner of this broadcasted IP Address and and returns the MAC address. 
 
 This Allowws the Sender ARP to populate the frame with the Destination MAC Address. This is then sent down to Layer 1 and transferred across the Physical Network.
+
+# IP Routing
+ 
+ Routers has a network interface in both networks it touches, theyre layer 3 devices that understand Layer 1-2-3. 
+
+## How IP example is broken down: 
+
+D1 (133.33.3.7) wants to send a packet to D3 (119.18.35.60). <br>
+D1 recognises D3 is on a different network based on the subnet mask and destination IP. <br>
+
+ARP (Address Resolution Protocol) is used to get the MAC address of D2, which is the next local device (since D1 and D2 are on the same network).
+D1 encapsulates the packet in a frame and sends it to D2.
+
+
+D2 confirms that the destination IP (D3) is not local to its network. <br>
+D2 uses ARP to find the MAC address of the default gateway (R1), as the packet needs to leave the Orange network. <br>
+D2 sends the packet to R1 with R1's MAC address as the next hop.
+
+R1 receives the packet and removes the frame to check the destination IP. <br>
+R1 sees the packet is destined for D3 and looks at its routing table. <br>
+R1 finds that D3 is on the Pink Network and creates a new frame to send to R2, the next hop in the path. <br>
+R1 encapsulates the packet in a new frame (F3) and sends it to R2.
+
+
+R2 receives the packet, removes the frame, and checks the destination IP (D3: 119.18.35.60). <br>
+Since D3 is on the same network as R2, ARP is used again to find D3’s MAC address. <br>
+R2 then creates a new frame (F4) addressed to D3 and encapsulates the packet inside it.
+
+R2 sends the final frame (F4) to D3. <br>
+D3 receives the frame, removes the encapsulation, and processes the packet.
+
+## Key learnings:
+Routing Between Networks: Devices on different networks use routers to forward packets, and each router makes a decision based on its routing table.
+
+ARP (Address Resolution Protocol): Used at each hop to map the destination IP address to a MAC address, allowing the packet to be delivered at the data link layer (Layer 2).
+
+Encapsulation: As the packet travels through the network, each router removes the old frame and creates a new one, keeping the original packet intact.
+
+![alt text](./OSI_Images/IP_Routing.png)
+
+# Recap of Layer 3
+
+Layer 3 adds IP addresses, version 4 or 6 and is Cross-Network addressing.
+
+Adds ARP - Finds MAC addresses for a given IP Address
+
+Adds Routes - where to forward a packet
+
+Route Tables - A table of multiple routes
+
+Router - Moves packets from SRC to DEST - Encapsulating in L2 on the way
+
+Device <=> Device communication over the internet
+
+No method for channels of communications,i.e. SRC IP<=> DEST IP Only - only 1 stream of communication (cant have different apps on devices communicating at the same time  - resolved by L4 and above)
+
+Packets COULD be delivered out of order
