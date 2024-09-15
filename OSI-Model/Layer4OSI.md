@@ -71,3 +71,40 @@ Checksum - Used for error checking, can arrange for re-transmission of data as r
 Urgent Pointer - This is a `16 bit` field that indicates the `location` of the last byte of urgent data in a TCP Segment. Simply put the Urgent data is data that needs to be processed ASAP.
 
 From Source and Destination Port to Options and Paddings (Which aren't currently mentioned but sit below Checksum and Urgent Point) - These all together make up the `TCP Header`.
+
+
+## TCP 
+
+Since TCP is `connection-based`, a connection is established between two devices that use a `random port` on a client and a `known port` on the server.
+- This connections bi-directional. 
+
+Since this is TCP, the connection is reliable which is due to the segments being encapsulated in the `IP Packets`. They come with all the flaws of IP packets like no error-checking or ordering.
+
+Since IP Packets can be recieved out-of-order and because they dont specifiy ports, they `cant be used for`multiple applications or multiple clients (because the server can't seperate what relates to what). 
+
+Communication between a server and a client still `use packets from layer 3` but we know that these are isolated from each other.
+- Layer 4 takes data provided to it and splits in into `segments` which are then encapsulated into IP Packets. These segments contain a `sequence` number which maintains the order of the segments  
+
+ So the benefit of these segments are just that they allow data communication to have in a consisten reliable fashion, and if issues arrive such as one packet being destroyed they can be `re-transmitted`.
+
+
+A Client will communincate from its `source port`, which can be any port for example: port 23060 and it communicates with the `server port` on a `well known port` such as 443. 
+
+The port opened up on the client (your machine) opens up a temporary port or `Ephemeral port` which is usually a higher port range like 23060. 
+
+So a Client<->Server communication has a Source port and a Destination port. Since communication is bi-directional, the Source port can also be swapped into the Destination port.
+
+Layer 4 sees these as different and this is why you need `2 sets of rules` on a network ACL within AWS for example, one for Client>Server and one for Server>Client.
+
+#### Note:
+When Epehemeral Port is mentioned or High port, this is what the `client picked as the source port`. 
+
+# Summary of TCP vs UDP
+
+| TCP:   | UDP  |
+|------  | ------ |
+|Connection-Oriented | Connectionless|           
+| Reliable, ensures data delivery and order | Less reliable, no guarantee of deliver or order |
+| Slower due to overhead of connection setup | Faster, no connection setup required
+|Error-checking and flow control| No error-checking or flow control
+|Web browsing,email, file transfer| Video streaming, online gaming, DNS, VPN
